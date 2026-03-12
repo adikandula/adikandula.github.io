@@ -1,91 +1,599 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aditya Kandula — Product Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <!-- Bulma -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css">
+  :root {
+    --bg: #FFFFFF;
+    --bg2: #F4F6F9;
+    --ink: #111827;
+    --mid: #4B5563;
+    --accent: #1D4ED8;
+    --accent-soft: #EFF6FF;
+    --line: rgba(17,24,39,0.1);
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
 
-    <!-- Main CSS File -->
-    <link rel="stylesheet" type="text/css" href="./static/css/main.css" />
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
 
-    <!--Font Awesome-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"
-        crossorigin="anonymous">
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 60px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav.scrolled { border-color: var(--line); }
+  .nav-logo { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; text-decoration: none; color: var(--ink); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 60px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute; top: 50%; right: -40px; transform: translateY(-50%);
+    font-family: var(--serif); font-size: clamp(140px, 20vw, 260px); font-weight: 400;
+    color: rgba(17,24,39,0.04); white-space: nowrap; pointer-events: none; user-select: none; line-height: 1;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+    opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero h1 {
+    font-family: var(--serif); font-size: clamp(52px, 8vw, 108px);
+    font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; max-width: 900px;
+    opacity: 0; transform: translateY(30px); animation: fadeUp 0.9s 0.4s forwards;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .typing-line { display: block; min-height: 1.1em; margin-top: 4px; }
+  .typed-word {
+    color: var(--accent); font-style: italic;
+    border-right: 3px solid var(--accent); padding-right: 4px;
+    animation: blink 0.75s step-end infinite;
+  }
+  @keyframes blink { 50% { border-color: transparent; } }
 
-    <link rel="icon" type="image/png" href="./static/img/icon.png">
+  .hero-sub {
+    margin-top: 36px; font-size: 1rem; color: var(--mid); max-width: 460px; line-height: 1.75;
+    opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.65s forwards;
+  }
+  .hero-cta {
+    margin-top: 48px; display: flex; gap: 20px; align-items: center;
+    opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.85s forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #fff; font-family: var(--sans);
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 14px 32px; text-decoration: none; transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: #2563EB; transform: translateY(-1px); }
+  .btn-ghost {
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--mid); text-decoration: none; border-bottom: 1px solid var(--line);
+    padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+  .scroll-hint {
+    position: absolute; bottom: 36px; right: 60px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid);
+    opacity: 0; animation: fadeUp 1s 1.2s forwards;
+  }
+  .scroll-line { width: 40px; height: 1px; background: var(--mid); position: relative; overflow: hidden; }
+  .scroll-line::after {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%; background: var(--accent);
+    animation: lineSlide 2s 1.5s infinite;
+  }
 
-    <title>Adi Kandula</title>
+  /* ── SECTION BASE ── */
+  section { padding: 120px 60px; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 60px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent); opacity: 0.4; }
 
+  /* ── ABOUT ── */
+  #about { border-top: 1px solid var(--line); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-heading { font-family: var(--serif); font-size: clamp(34px, 4vw, 52px); font-weight: 400; line-height: 1.2; letter-spacing: -0.01em; }
+  .about-heading em { font-style: italic; color: var(--accent); }
+  .about-body { color: var(--mid); line-height: 1.85; font-size: 1rem; }
+  .about-body p + p { margin-top: 20px; }
+  .about-stats { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .stat-block { cursor: default; }
+  .stat-num { font-family: var(--serif); font-size: 2.6rem; font-weight: 400; color: var(--ink); line-height: 1; transition: color 0.3s; }
+  .stat-block:hover .stat-num { color: var(--accent); }
+  .stat-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-top: 6px; }
+
+  /* ── EXPERIENCE ── */
+  #experience { border-top: 1px solid var(--line); background: #1E293B; color: #F0F4FF; }
+  #experience .section-label { color: #60A5FA; }
+  #experience .section-label::after { background: #60A5FA; }
+  .exp-hint { font-size: 0.76rem; color: rgba(240,244,255,0.3); margin-top: -44px; margin-bottom: 44px; letter-spacing: 0.06em; }
+
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-item { border-bottom: 1px solid rgba(240,244,255,0.07); overflow: hidden; }
+  .exp-item:first-child { border-top: 1px solid rgba(240,244,255,0.07); }
+
+  .exp-header {
+    display: grid; grid-template-columns: 200px 1fr; gap: 40px;
+    padding: 44px 0; cursor: pointer;
+    transition: padding-left 0.2s;
+  }
+  .exp-header:hover { padding-left: 8px; }
+  .exp-meta { padding-top: 6px; }
+  .exp-period { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240,244,255,0.35); }
+  .exp-co { margin-top: 8px; font-family: var(--serif); font-size: 1.05rem; color: rgba(240,244,255,0.5); font-weight: 400; }
+  .exp-header-right { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .exp-title-wrap {}
+  .exp-tag { display: inline-block; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border: 1px solid rgba(96,165,250,0.4); color: #60A5FA; border-radius: 2px; margin-bottom: 10px; }
+  .exp-title { font-family: var(--serif); font-size: clamp(20px, 2.2vw, 27px); font-weight: 400; line-height: 1.2; color: #F0F4FF; }
+  .exp-toggle {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1px solid rgba(240,244,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(240,244,255,0.4); font-size: 1.1rem; flex-shrink: 0;
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.2s, color 0.2s;
+  }
+  .exp-item.open .exp-toggle { transform: rotate(45deg); background: rgba(96,165,250,0.15); color: #60A5FA; }
+
+  .exp-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), padding 0.35s;
+    padding: 0 0 0 240px;
+  }
+  .exp-item.open .exp-body { max-height: 600px; padding: 0 0 48px 240px; }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .exp-bullets li { font-size: 0.88rem; color: rgba(240,244,255,0.52); line-height: 1.65; padding-left: 18px; position: relative; }
+  .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: #60A5FA; font-size: 0.8rem; }
+
+  /* ── SKILLS ── */
+  #skills { border-top: 1px solid var(--line); }
+  .skills-filter { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 48px; }
+  .filter-btn {
+    font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 8px 22px; border: 1px solid var(--line); background: transparent;
+    color: var(--mid); cursor: pointer; border-radius: 100px; transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .skill-card { padding: 44px 38px; background: rgba(17,24,39,0.03); transition: background 0.2s, opacity 0.3s, transform 0.3s; }
+  .skill-card:hover { background: rgba(17,24,39,0.06); }
+  .skill-card.dimmed { opacity: 0.2; transform: scale(0.98); }
+  .skill-card-title { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 22px; }
+  .skill-items { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag { font-size: 0.8rem; color: var(--mid); padding: 6px 14px; border: 1px solid var(--line); border-radius: 1px; transition: border-color 0.2s, color 0.2s; cursor: default; }
+  .skill-tag:hover { border-color: var(--accent); color: var(--ink); }
+
+  /* ── INTERESTS ── */
+  #interests { border-top: 1px solid var(--line); padding: 80px 60px; }
+  .interests-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .interests-label { font-family: var(--serif); font-size: clamp(26px, 3vw, 38px); font-weight: 400; color: var(--mid); font-style: italic; }
+  .interests-pills { display: flex; flex-wrap: wrap; gap: 12px; }
+  .pill { font-size: 0.82rem; padding: 10px 22px; border: 1px solid var(--line); color: var(--ink); border-radius: 100px; transition: background 0.2s, border-color 0.2s, transform 0.2s; display: flex; align-items: center; gap: 8px; cursor: default; }
+  .pill:hover { background: var(--ink); color: white; border-color: var(--ink); transform: translateY(-2px); }
+
+  /* ── CONTACT ── */
+  #contact { border-top: 1px solid var(--line); padding: 120px 60px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  #contact h2 { font-family: var(--serif); font-size: clamp(44px, 7vw, 86px); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; max-width: 700px; }
+  #contact h2 em { font-style: italic; color: var(--accent); }
+  #contact p { color: var(--mid); margin: 28px 0 48px; font-size: 1rem; line-height: 1.7; max-width: 380px; }
+  .contact-links { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 14px 32px; border: 1px solid var(--line);
+    color: var(--ink); text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .contact-link:hover { background: var(--ink); color: white; border-color: var(--ink); transform: translateY(-2px); }
+  .contact-link.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .contact-link.primary:hover { background: #2563EB; border-color: #2563EB; }
+
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid var(--line); padding: 28px 60px; display: flex; justify-content: space-between; align-items: center; }
+  footer span { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--mid); }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @keyframes lineSlide { 0% { left: -100%; } 50% { left: 100%; } 100% { left: 100%; } }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero { padding: 0 24px 64px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .exp-header { grid-template-columns: 1fr; gap: 12px; }
+    .exp-body { padding: 0 0 32px 0 !important; }
+    .exp-meta { display: flex; gap: 12px; align-items: baseline; }
+    #contact { padding: 80px 24px; }
+    footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    .interests-inner { flex-direction: column; align-items: flex-start; }
+    .scroll-hint { display: none; }
+  }
+</style>
 </head>
-
 <body>
 
-    <div class="columns is-mobile is-centered" style="padding-top: 5rem;">
-        <div class="column is-11-mobile is-8-tablet">
-            <section class="main-info">
-                <div class="section-header">
-                    <h1><strong>ADITYA<span class="is-colored">KANDULA</span></strong></h1>
-                    <h2><strong>Technical Product Manager</strong></h2>
-                </div>
-                <h3>
-                    Hey! I'm Adi, a junior at the
-                    <a class="highlight-link" href="https://illinois.edu/" target="_blank">University of Illinois</a>
-                    studying computer science.
-                    I'm an aspiring product manager passionate about developing user-centric experiences.
-                    Over the past two summers I've interned at Microsoft (where I helped roll out
-                    <a class="highlight-link"
-                        href="https://www.theverge.com/2021/6/17/22538144/microsoft-fluid-components-documents-office-teams-onenote-outlook-whiteboard"
-                        target="_blank">Fluid Framework</a>).
-                    In my free time, you can find me
-                    <a class="highlight-link"
-                        href="https://www.lansingstatejournal.com/story/sports/high-school/2017/10/21/perfection-achieved-okemos-tennis-captures-division-2-state-title/787537001/"
-                        target="_blank">playing tennis</a>,
-                    <a class="highlight-link"
-                        href="https://open.spotify.com/playlist/6pvMM09EamPFa3m8whFYGF?si=9b903ee560c24c5c"
-                        target="_blank">curating Spotify playlists</a>, or
-                    <a class="highlight-link" href="https://www.youtube.com/watch?v=11Unxr0qCUs"
-                        target="_blank">cheering on the Illini</a>.
-                </h3>
-            </section>
+<nav id="nav">
+  <a class="nav-logo" href="#">Aditya Kandula</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-text">PM</div>
+  <p class="hero-eyebrow">Product Manager · Washington, D.C.</p>
+  <h1>
+    I build products<br>
+    <span class="typing-line">people <span class="typed-word" id="typed-word"></span></span>
+  </h1>
+  <p class="hero-sub">Senior PM at Capital One. I turn ambiguous problems into scalable systems — from instant rewards activation to enterprise API platforms.</p>
+  <div class="hero-cta">
+    <a href="#experience" class="btn-primary">View My Work ↓</a>
+    <a href="#contact" class="btn-ghost">Get in touch</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
 
-            <!-- <section class="work-experience">
-                <div class="section-header">
-                    <h2><strong>Where I've Worked</strong></h2>
-                </div>
-                <div class="experience-entry">
-                    <h1 class="job-title">Explore Intern <span class="is-colored">@ Microsoft</span></h1>
-                    <p class="date">June 2020 - August 2020</p>
-                </div>
-                <div class="experience-entry">
-                    <h1 class="job-title">Explore Intern <span class="is-colored">@ Microsoft</span></h1>
-                    <p class="date">June 2020 - August 2020</p>
-                </div>
-                <div class="experience-entry">
-                    <h1 class="job-title">Explore Intern <span class="is-colored">@ Microsoft</span></h1>
-                    <p class="date">June 2020 - August 2020</p>
-                </div>
-            </section> -->
-
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label reveal">About</p>
+  <div class="about-grid">
+    <div class="reveal">
+      <h2 class="about-heading">Where <em>strategy</em><br>meets execution.</h2>
+      <div class="about-stats">
+        <div class="stat-block">
+          <div class="stat-num"><span class="count-num" data-target="3" data-suffix="+">0</span></div>
+          <div class="stat-label">Years in Product</div>
         </div>
+        <div class="stat-block">
+          <div class="stat-num"><span class="count-num" data-target="30" data-suffix="K+">0</span></div>
+          <div class="stat-label">Daily accounts touched</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num" style="font-size:1.85rem; letter-spacing:-0.02em;">24h <span style="color:var(--accent)">→</span> 2s</div>
+          <div class="stat-label">Rewards enrollment speed</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num" style="font-size:1.9rem;">UIUC</div>
+          <div class="stat-label">Economics + CS</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-body reveal">
+      <p>I'm a product manager who operates at the intersection of customer experience and technical complexity. At Capital One, I've shipped rewards infrastructure, API governance platforms, and entitlement systems — all at scale.</p>
+      <p>My approach: deeply understand users, build clear product vision, and drive cross-functional teams from zero to launch. I'm equally comfortable in a roadmap review and a system design doc.</p>
+      <p>Previously, I interned at Microsoft (twice), where I worked on Fluid Framework's real-time collaboration features. Before that, I spent a summer at EnterpriseDB doing product research on database migration tooling.</p>
+      <p>I graduated from the University of Illinois at Urbana-Champaign with a B.A. in Economics and a minor in Computer Science — a combo that's served me well in fintech.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label reveal">Experience</p>
+  <p class="exp-hint reveal">Click any role to expand</p>
+  <div class="exp-list">
+
+    <div class="exp-item reveal" data-exp>
+      <div class="exp-header">
+        <div class="exp-meta">
+          <div class="exp-period">Aug 2024 — Present</div>
+          <div class="exp-co">Capital One</div>
+        </div>
+        <div class="exp-header-right">
+          <div class="exp-title-wrap">
+            <span class="exp-tag">Current Role</span>
+            <h3 class="exp-title">Senior Associate Product Manager</h3>
+          </div>
+          <div class="exp-toggle">+</div>
+        </div>
+      </div>
+      <div class="exp-body">
+        <ul class="exp-bullets">
+          <li>Leading migration enablement from Discover card accounts to Capital One's ecosystem, ensuring seamless customer transitions and data continuity.</li>
+          <li>Spearheading enhanced rewards capabilities — allowing customers to purchase premium benefits beyond their base package — across product, engineering, and data.</li>
+          <li>Directed reimagined enrollment experience enabling instantaneous rewards activation for 30,000+ new daily accounts.</li>
+          <li>Reduced rewards enrollment time from 24 hours to under 2 seconds via multi-phased rollout.</li>
+          <li>Led enterprise-scale performance testing to ensure Rewards infrastructure scalability post-Discover acquisition.</li>
+        </ul>
+      </div>
     </div>
 
-    <footer class="footer">
-        <div class="footer-content has-text-centered">
-            <a href="https://www.linkedin.com/in/adikandula/" target="_blank" class="btn-nav"><i
-                    class="fab fa-linkedin"></i></a>
-            <a href="https://www.instagram.com/adi_kandu/" target="_blank" class="btn-nav"><i
-                    class="fab fa-instagram"></i></a>
-            <a href="mailto:aditya.kandula@gmail.com" target="_blank" class="btn-nav"><i class="fa fa-envelope"></i></a>
+    <div class="exp-item reveal" data-exp>
+      <div class="exp-header">
+        <div class="exp-meta">
+          <div class="exp-period">Aug 2023 — Aug 2024</div>
+          <div class="exp-co">Capital One</div>
         </div>
-    </footer>
+        <div class="exp-header-right">
+          <div class="exp-title-wrap">
+            <h3 class="exp-title">Associate Product Manager</h3>
+          </div>
+          <div class="exp-toggle">+</div>
+        </div>
+      </div>
+      <div class="exp-body">
+        <ul class="exp-bullets">
+          <li>Product owner for two engineering teams: a decisioning engine governing API access and an eligibility service powering frontend entitlements.</li>
+          <li>Built Self-Service Platform enabling API teams to dynamically enforce customer access based on legal and regulatory requirements.</li>
+          <li>Designed access control for virtual card number issuance for secondary account holders, ensuring compliance and platform security.</li>
+          <li>Led successful migration from legacy entitlements system, achieving significant latency reduction across services.</li>
+        </ul>
+      </div>
+    </div>
 
+    <div class="exp-item reveal" data-exp>
+      <div class="exp-header">
+        <div class="exp-meta">
+          <div class="exp-period">Summer 2022</div>
+          <div class="exp-co">EnterpriseDB</div>
+        </div>
+        <div class="exp-header-right">
+          <div class="exp-title-wrap">
+            <h3 class="exp-title">Product Manager Intern</h3>
+          </div>
+          <div class="exp-toggle">+</div>
+        </div>
+      </div>
+      <div class="exp-body">
+        <ul class="exp-bullets">
+          <li>Conducted user research on EDB Postgres Migration Portal to identify pain points.</li>
+          <li>Recommended tools for EPAS integration based on package support and licensing.</li>
+          <li>Developed foreign data wrapper extensions for remote server access capabilities.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal" data-exp>
+      <div class="exp-header">
+        <div class="exp-meta">
+          <div class="exp-period">Summer 2021</div>
+          <div class="exp-co">Microsoft</div>
+        </div>
+        <div class="exp-header-right">
+          <div class="exp-title-wrap">
+            <h3 class="exp-title">Program Manager Intern</h3>
+          </div>
+          <div class="exp-toggle">+</div>
+        </div>
+      </div>
+      <div class="exp-body">
+        <ul class="exp-bullets">
+          <li>Led user studies and market research to refine Fluid Framework's real-time collaboration copy-and-paste functionality.</li>
+          <li>Authored design specifications and partnered with engineers to deliver an improved prototype.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal" data-exp>
+      <div class="exp-header">
+        <div class="exp-meta">
+          <div class="exp-period">Summer 2020</div>
+          <div class="exp-co">Microsoft</div>
+        </div>
+        <div class="exp-header-right">
+          <div class="exp-title-wrap">
+            <h3 class="exp-title">Explore Intern</h3>
+          </div>
+          <div class="exp-toggle">+</div>
+        </div>
+      </div>
+      <div class="exp-body">
+        <ul class="exp-bullets">
+          <li>Developed collaborative commenting feature for Fluid Framework real-time collaboration platform.</li>
+          <li>Implemented rich text editor enabling high-level customization and styling within comments.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label reveal">Skills</p>
+  <div class="skills-filter reveal">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="product">Product</button>
+    <button class="filter-btn" data-filter="languages">Languages</button>
+    <button class="filter-btn" data-filter="tools">Tools</button>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-card" data-category="product">
+      <div class="skill-card-title">Product</div>
+      <div class="skill-items">
+        <span class="skill-tag">Roadmapping</span>
+        <span class="skill-tag">Prototyping</span>
+        <span class="skill-tag">A/B Testing</span>
+        <span class="skill-tag">End-to-End Testing</span>
+        <span class="skill-tag">Data Analysis</span>
+        <span class="skill-tag">User Research</span>
+        <span class="skill-tag">API Products</span>
+      </div>
+    </div>
+    <div class="skill-card" data-category="languages">
+      <div class="skill-card-title">Languages</div>
+      <div class="skill-items">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">Kotlin</span>
+        <span class="skill-tag">HTML/CSS</span>
+      </div>
+    </div>
+    <div class="skill-card" data-category="tools">
+      <div class="skill-card-title">Tools & Platforms</div>
+      <div class="skill-items">
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">TypeScript</span>
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Snowflake</span>
+        <span class="skill-tag">Splunk</span>
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">Git</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERESTS -->
+<section id="interests">
+  <div class="interests-inner reveal">
+    <p class="interests-label">Beyond the roadmap —</p>
+    <div class="interests-pills">
+      <span class="pill"><span>🏀</span> Illini Basketball</span>
+      <span class="pill"><span>♟️</span> Chess Theory</span>
+      <span class="pill"><span>🎾</span> Tennis · Federer Fan</span>
+      <span class="pill"><span>🍕</span> Detroit-Style Pizza</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="reveal">Let's build<br>something <em>great.</em></h2>
+  <p class="reveal">Open to new PM opportunities, collaborations, and interesting conversations.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:aditya.kandula@gmail.com" class="contact-link primary">✉ Email Me</a>
+    <a href="https://linkedin.com/in/adityakandula" target="_blank" class="contact-link">LinkedIn ↗</a>
+    <a href="tel:5177752104" class="contact-link">📞 Call</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Aditya Kandula</span>
+  <span>Arlington, VA · Open to opportunities</span>
+</footer>
+
+<script>
+// 1. NAV scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+
+// 2. TYPING EFFECT
+const words = ['love', 'remember', 'trust', 'talk about', 'come back to'];
+let wIdx = 0, cIdx = 0, deleting = false;
+const typedEl = document.getElementById('typed-word');
+function type() {
+  const word = words[wIdx];
+  if (!deleting) {
+    typedEl.textContent = word.slice(0, ++cIdx);
+    if (cIdx === word.length) { deleting = true; setTimeout(type, 1900); return; }
+  } else {
+    typedEl.textContent = word.slice(0, --cIdx);
+    if (cIdx === 0) { deleting = false; wIdx = (wIdx + 1) % words.length; setTimeout(type, 320); return; }
+  }
+  setTimeout(type, deleting ? 50 : 100);
+}
+setTimeout(type, 1500);
+
+// 3. SCROLL REVEAL
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
+      const idx = siblings.indexOf(entry.target);
+      setTimeout(() => entry.target.classList.add('visible'), idx * 90);
+      revealObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// 4. ANIMATED COUNTERS
+function animateCount(el) {
+  const target = +el.dataset.target;
+  const suffix = el.dataset.suffix || '';
+  const duration = 1400, step = 16;
+  let current = 0;
+  const inc = target / (duration / step);
+  const t = setInterval(() => {
+    current = Math.min(current + inc, target);
+    el.textContent = Math.floor(current) + suffix;
+    if (current >= target) clearInterval(t);
+  }, step);
+}
+new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.count-num').forEach(animateCount);
+    }
+  });
+}, { threshold: 0.4 }).observe(document.querySelector('.about-stats'));
+
+// 5. EXPANDABLE EXPERIENCE
+document.querySelectorAll('[data-exp]').forEach(item => {
+  item.querySelector('.exp-header').addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('[data-exp].open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+// Open first on load
+setTimeout(() => document.querySelector('[data-exp]').classList.add('open'), 200);
+
+// 6. SKILL FILTER
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.skill-card').forEach(card => {
+      const match = filter === 'all' || card.dataset.category === filter;
+      card.classList.toggle('dimmed', !match);
+    });
+  });
+});
+</script>
 </body>
-
 </html>

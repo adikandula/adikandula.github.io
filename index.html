@@ -135,47 +135,100 @@
   .stat-block:hover .stat-num { color: var(--accent); }
   .stat-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-top: 6px; }
 
-  /* ── EXPERIENCE ── */
+  /* ── EXPERIENCE TIMELINE ── */
   #experience { border-top: 1px solid var(--line); background: #1E293B; color: #F0F4FF; }
   #experience .section-label { color: #60A5FA; }
   #experience .section-label::after { background: #60A5FA; }
-  .exp-hint { font-size: 0.76rem; color: rgba(240,244,255,0.3); margin-top: -44px; margin-bottom: 44px; letter-spacing: 0.06em; }
 
-  .exp-list { display: flex; flex-direction: column; }
-  .exp-item { border-bottom: 1px solid rgba(240,244,255,0.07); overflow: hidden; }
-  .exp-item:first-child { border-top: 1px solid rgba(240,244,255,0.07); }
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+  /* vertical spine */
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 8px; bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(96,165,250,0.6), rgba(96,165,250,0.08));
+  }
 
-  .exp-header {
-    display: grid; grid-template-columns: 200px 1fr; gap: 40px;
-    padding: 44px 0; cursor: pointer;
-    transition: padding-left 0.2s;
+  .tl-item {
+    position: relative;
+    padding: 0 0 56px 48px;
+    opacity: 0; transform: translateX(-16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .exp-header:hover { padding-left: 8px; }
-  .exp-meta { padding-top: 6px; }
-  .exp-period { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240,244,255,0.35); }
-  .exp-co { margin-top: 8px; font-family: var(--serif); font-size: 1.05rem; color: rgba(240,244,255,0.5); font-weight: 400; }
-  .exp-header-right { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-  .exp-title-wrap {}
-  .exp-tag { display: inline-block; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border: 1px solid rgba(96,165,250,0.4); color: #60A5FA; border-radius: 2px; margin-bottom: 10px; }
-  .exp-title { font-family: var(--serif); font-size: clamp(20px, 2.2vw, 27px); font-weight: 400; line-height: 1.2; color: #F0F4FF; }
-  .exp-toggle {
-    width: 32px; height: 32px; border-radius: 50%;
-    border: 1px solid rgba(240,244,255,0.18);
-    display: flex; align-items: center; justify-content: center;
-    color: rgba(240,244,255,0.4); font-size: 1.1rem; flex-shrink: 0;
-    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.2s, color 0.2s;
-  }
-  .exp-item.open .exp-toggle { transform: rotate(45deg); background: rgba(96,165,250,0.15); color: #60A5FA; }
+  .tl-item.tl-visible { opacity: 1; transform: none; }
+  .tl-item:last-child { padding-bottom: 0; }
 
-  .exp-body {
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), padding 0.35s;
-    padding: 0 0 0 240px;
+  /* node dot on spine */
+  .tl-node {
+    position: absolute; left: -47px; top: 10px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #1E293B;
+    border: 2px solid rgba(96,165,250,0.4);
+    transition: border-color 0.3s, background 0.3s;
+    z-index: 1;
   }
-  .exp-item.open .exp-body { max-height: 600px; padding: 0 0 48px 240px; }
-  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 11px; }
-  .exp-bullets li { font-size: 0.88rem; color: rgba(240,244,255,0.52); line-height: 1.65; padding-left: 18px; position: relative; }
-  .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: #60A5FA; font-size: 0.8rem; }
+  .tl-item.tl-current .tl-node {
+    background: #60A5FA;
+    border-color: #60A5FA;
+    box-shadow: 0 0 0 4px rgba(96,165,250,0.15);
+  }
+  .tl-item:hover .tl-node { border-color: #60A5FA; }
+
+  .tl-period {
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(240,244,255,0.35); margin-bottom: 6px;
+  }
+  .tl-co {
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #60A5FA; margin-bottom: 8px; font-weight: 400;
+  }
+  .tl-title {
+    font-family: var(--serif); font-size: clamp(18px, 2vw, 24px);
+    font-weight: 400; line-height: 1.2; color: #F0F4FF; margin-bottom: 16px;
+  }
+  .tl-tag {
+    display: inline-block; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 9px; border: 1px solid rgba(96,165,250,0.4); color: #60A5FA;
+    border-radius: 2px; margin-bottom: 10px; vertical-align: middle; margin-left: 10px;
+  }
+  .tl-bullets { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .tl-bullets li {
+    font-size: 0.86rem; color: rgba(240,244,255,0.48); line-height: 1.65;
+    padding-left: 16px; position: relative;
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+  }
+  .tl-bullets li::before { content: '—'; position: absolute; left: 0; color: #60A5FA; font-size: 0.75rem; }
+  .tl-item.tl-expanded .tl-bullets li { max-height: 100px; opacity: 1; }
+  .tl-item.tl-expanded .tl-bullets li:nth-child(2) { transition-delay: 0.05s; }
+  .tl-item.tl-expanded .tl-bullets li:nth-child(3) { transition-delay: 0.1s; }
+  .tl-item.tl-expanded .tl-bullets li:nth-child(4) { transition-delay: 0.15s; }
+  .tl-item.tl-expanded .tl-bullets li:nth-child(5) { transition-delay: 0.2s; }
+
+  .tl-expand-btn {
+    margin-top: 14px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(96,165,250,0.6); background: none; border: none;
+    cursor: pointer; padding: 0; transition: color 0.2s;
+  }
+  .tl-expand-btn:hover { color: #60A5FA; }
+  .tl-expand-btn .tl-arrow {
+    display: inline-block; transition: transform 0.3s;
+    font-style: normal;
+  }
+  .tl-item.tl-expanded .tl-expand-btn .tl-arrow { transform: rotate(180deg); }
+  .tl-item.tl-expanded .tl-expand-btn .tl-btn-label::before { content: 'Hide'; }
+  .tl-expand-btn .tl-btn-label::before { content: 'Show details'; }
+
+  @media (max-width: 768px) {
+    .timeline { padding-left: 28px; }
+    .tl-item { padding-left: 32px; }
+    .tl-node { left: -35px; }
+  }
 
   /* ── SKILLS ── */
   #skills { border-top: 1px solid var(--line); }
@@ -248,6 +301,31 @@
     .interests-inner { flex-direction: column; align-items: flex-start; }
     .scroll-hint { display: none; }
   }
+
+  /* ── CUSTOM CURSOR ── */
+  * { cursor: none !important; }
+  .cursor-dot {
+    position: fixed; top: 0; left: 0; z-index: 9999;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s, opacity 0.2s;
+  }
+  .cursor-ring {
+    position: fixed; top: 0; left: 0; z-index: 9998;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1.5px solid rgba(29,78,216,0.35);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s ease, height 0.25s ease, border-color 0.25s, opacity 0.2s;
+  }
+  .cursor-dot.hovering { width: 12px; height: 12px; background: var(--accent); }
+  .cursor-ring.hovering { width: 52px; height: 52px; border-color: rgba(29,78,216,0.5); }
+  .cursor-dot.clicking { width: 6px; height: 6px; }
+  .cursor-ring.clicking { width: 28px; height: 28px; }
+  @media (hover: none) { * { cursor: auto !important; } .cursor-dot, .cursor-ring { display: none; } }
+
 </style>
 </head>
 <body>
@@ -302,8 +380,8 @@
           <div class="stat-label">Rewards enrollment speed</div>
         </div>
         <div class="stat-block">
-          <div class="stat-num" style="font-size:1.9rem;">UIUC '23</div>
-          <div class="stat-label">Economics + CS</div>
+          <div class="stat-num" style="font-size:1.9rem;">UIUC</div>
+          <div class="stat-label">Class of 2023</div>
         </div>
       </div>
     </div>
@@ -316,122 +394,75 @@
   </div>
 </section>
 
-<!-- EXPERIENCE -->
+<!-- EXPERIENCE TIMELINE -->
 <section id="experience">
   <p class="section-label reveal">Experience</p>
-  <p class="exp-hint reveal">Click any role to expand</p>
-  <div class="exp-list">
+  <div class="timeline">
 
-    <div class="exp-item reveal" data-exp>
-      <div class="exp-header">
-        <div class="exp-meta">
-          <div class="exp-period">Aug 2024 — Present</div>
-          <div class="exp-co">Capital One</div>
-        </div>
-        <div class="exp-header-right">
-          <div class="exp-title-wrap">
-            <span class="exp-tag">Current Role</span>
-            <h3 class="exp-title">Senior Associate Product Manager - Rewards Platform</h3>
-          </div>
-          <div class="exp-toggle">+</div>
-        </div>
-      </div>
-      <div class="exp-body">
-        <ul class="exp-bullets">
-          <li>Leading migration enablement from Discover card accounts to Capital One's ecosystem, ensuring seamless customer transitions and data continuity.</li>
-          <li>Spearheading enhanced rewards capabilities — allowing customers to purchase premium benefits beyond their base package — across product, engineering, and data.</li>
-          <li>Directed reimagined enrollment experience enabling instantaneous rewards activation for 30,000+ new daily accounts.</li>
-          <li>Reduced rewards enrollment time from 24 hours to under 2 seconds via multi-phased rollout.</li>
-          <li>Led enterprise-scale performance testing to ensure Rewards infrastructure scalability post-Discover acquisition.</li>
-        </ul>
-      </div>
+    <div class="tl-item tl-current" data-tl>
+      <div class="tl-node"></div>
+      <div class="tl-period">Aug 2024 — Present</div>
+      <div class="tl-co">Capital One</div>
+      <h3 class="tl-title">Senior Associate Product Manager — Rewards Platform <span class="tl-tag">Current</span></h3>
+      <ul class="tl-bullets">
+        <li>Leading migration enablement from Discover card accounts to Capital One's ecosystem, ensuring seamless customer transitions and data continuity.</li>
+        <li>Spearheading enhanced rewards capabilities — allowing customers to purchase premium benefits beyond their base package — across product, engineering, and data.</li>
+        <li>Directed reimagined enrollment experience enabling instantaneous rewards activation for 30,000+ new daily accounts.</li>
+        <li>Reduced rewards enrollment time from 24 hours to under 2 seconds via multi-phased rollout.</li>
+        <li>Led enterprise-scale performance testing to ensure Rewards infrastructure scalability post-Discover acquisition.</li>
+      </ul>
+      <button class="tl-expand-btn" aria-label="Toggle details"><span class="tl-btn-label"></span><i class="tl-arrow">↓</i></button>
     </div>
 
-    <div class="exp-item reveal" data-exp>
-      <div class="exp-header">
-        <div class="exp-meta">
-          <div class="exp-period">Aug 2023 — Aug 2024</div>
-          <div class="exp-co">Capital One</div>
-        </div>
-        <div class="exp-header-right">
-          <div class="exp-title-wrap">
-            <h3 class="exp-title">Associate Product Manager - Enterprise Entitlements</h3>
-          </div>
-          <div class="exp-toggle">+</div>
-        </div>
-      </div>
-      <div class="exp-body">
-        <ul class="exp-bullets">
-          <li>Product owner for two engineering teams: a decisioning engine governing API access and an eligibility service powering frontend entitlements.</li>
-          <li>Built Self-Service Platform enabling API teams to dynamically enforce customer access based on legal and regulatory requirements.</li>
-          <li>Designed access control for virtual card number issuance for secondary account holders, ensuring compliance and platform security.</li>
-          <li>Led successful migration from legacy entitlements system, achieving significant latency reduction across services.</li>
-        </ul>
-      </div>
+    <div class="tl-item" data-tl>
+      <div class="tl-node"></div>
+      <div class="tl-period">Aug 2023 — Aug 2024</div>
+      <div class="tl-co">Capital One</div>
+      <h3 class="tl-title">Associate Product Manager — Enterprise Entitlements</h3>
+      <ul class="tl-bullets">
+        <li>Product owner for two engineering teams: a decisioning engine governing API access and an eligibility service powering frontend entitlements.</li>
+        <li>Built Self-Service Platform enabling API teams to dynamically enforce customer access based on legal and regulatory requirements.</li>
+        <li>Designed access control for virtual card number issuance for secondary account holders, ensuring compliance and platform security.</li>
+        <li>Led successful migration from legacy entitlements system, achieving significant latency reduction across services.</li>
+      </ul>
+      <button class="tl-expand-btn" aria-label="Toggle details"><span class="tl-btn-label"></span><i class="tl-arrow">↓</i></button>
     </div>
 
-    <div class="exp-item reveal" data-exp>
-      <div class="exp-header">
-        <div class="exp-meta">
-          <div class="exp-period">Summer 2022</div>
-          <div class="exp-co">EnterpriseDB</div>
-        </div>
-        <div class="exp-header-right">
-          <div class="exp-title-wrap">
-            <h3 class="exp-title">Product Manager Intern - EDB Postgres</h3>
-          </div>
-          <div class="exp-toggle">+</div>
-        </div>
-      </div>
-      <div class="exp-body">
-        <ul class="exp-bullets">
-          <li>Conducted user research on EDB Postgres Migration Portal to identify pain points.</li>
-          <li>Recommended tools for EPAS integration based on package support and licensing.</li>
-          <li>Developed foreign data wrapper extensions for remote server access capabilities.</li>
-        </ul>
-      </div>
+    <div class="tl-item" data-tl>
+      <div class="tl-node"></div>
+      <div class="tl-period">Summer 2022</div>
+      <div class="tl-co">EnterpriseDB</div>
+      <h3 class="tl-title">Product Manager Intern — EDB Postgres</h3>
+      <ul class="tl-bullets">
+        <li>Conducted user research on EDB Postgres Migration Portal to identify service pain points.</li>
+        <li>Recommended tools for EPAS integration based on package support and licensing.</li>
+        <li>Utilized foreign data wrapper extensions to develop capabilities for accessing remote servers.</li>
+      </ul>
+      <button class="tl-expand-btn" aria-label="Toggle details"><span class="tl-btn-label"></span><i class="tl-arrow">↓</i></button>
     </div>
 
-    <div class="exp-item reveal" data-exp>
-      <div class="exp-header">
-        <div class="exp-meta">
-          <div class="exp-period">Summer 2021</div>
-          <div class="exp-co">Microsoft</div>
-        </div>
-        <div class="exp-header-right">
-          <div class="exp-title-wrap">
-            <h3 class="exp-title">Program Manager Intern - Fluid Framework</h3>
-          </div>
-          <div class="exp-toggle">+</div>
-        </div>
-      </div>
-      <div class="exp-body">
-        <ul class="exp-bullets">
-          <li>Led user studies and market research to refine Fluid Framework's real-time collaboration copy-and-paste functionality.</li>
-          <li>Authored design specifications and partnered with engineers to deliver an improved prototype.</li>
-        </ul>
-      </div>
+    <div class="tl-item" data-tl>
+      <div class="tl-node"></div>
+      <div class="tl-period">Summer 2021</div>
+      <div class="tl-co">Microsoft</div>
+      <h3 class="tl-title">Program Manager Intern — Fluid Framework</h3>
+      <ul class="tl-bullets">
+        <li>Led user studies and market research to refine Fluid's real-time collaboration copy-and-paste functionality.</li>
+        <li>Authored design specifications and partnered with engineers to deliver an improved prototype.</li>
+      </ul>
+      <button class="tl-expand-btn" aria-label="Toggle details"><span class="tl-btn-label"></span><i class="tl-arrow">↓</i></button>
     </div>
 
-    <div class="exp-item reveal" data-exp>
-      <div class="exp-header">
-        <div class="exp-meta">
-          <div class="exp-period">Summer 2020</div>
-          <div class="exp-co">Microsoft</div>
-        </div>
-        <div class="exp-header-right">
-          <div class="exp-title-wrap">
-            <h3 class="exp-title">Explore Intern - Fluid Framework</h3>
-          </div>
-          <div class="exp-toggle">+</div>
-        </div>
-      </div>
-      <div class="exp-body">
-        <ul class="exp-bullets">
-          <li>Developed collaborative commenting feature for Fluid Framework real-time collaboration platform.</li>
-          <li>Implemented rich text editor enabling high-level customization and styling within comments.</li>
-        </ul>
-      </div>
+    <div class="tl-item" data-tl>
+      <div class="tl-node"></div>
+      <div class="tl-period">Summer 2020</div>
+      <div class="tl-co">Microsoft</div>
+      <h3 class="tl-title">Explore Intern — Fluid Framework</h3>
+      <ul class="tl-bullets">
+        <li>Developed collaborative commenting feature for Fluid Framework real-time collaboration platform.</li>
+        <li>Implemented rich text editor enabling high-level customization and styling of text in comments.</li>
+      </ul>
+      <button class="tl-expand-btn" aria-label="Toggle details"><span class="tl-btn-label"></span><i class="tl-arrow">↓</i></button>
     </div>
 
   </div>
@@ -574,16 +605,40 @@ new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.4 }).observe(document.querySelector('.about-stats'));
 
-// 5. EXPANDABLE EXPERIENCE
-document.querySelectorAll('[data-exp]').forEach(item => {
-  item.querySelector('.exp-header').addEventListener('click', () => {
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('[data-exp].open').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
+// 5. TIMELINE
+const tlObs = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      const items = Array.from(document.querySelectorAll('.tl-item'));
+      const idx = items.indexOf(entry.target);
+      setTimeout(() => entry.target.classList.add('tl-visible'), idx * 120);
+      tlObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('[data-tl]').forEach(el => tlObs.observe(el));
+
+document.querySelectorAll('.tl-expand-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.tl-item');
+    item.classList.toggle('tl-expanded');
   });
 });
-// Open first on load
-setTimeout(() => document.querySelector('[data-exp]').classList.add('open'), 200);
+// Auto-expand first item
+setTimeout(() => { const first = document.querySelector('[data-tl]'); if (first) first.classList.add('tl-expanded'); }, 400);
+
+// 7. CUSTOM CURSOR
+const dot = document.createElement('div'); dot.className = 'cursor-dot'; document.body.appendChild(dot);
+const ring = document.createElement('div'); ring.className = 'cursor-ring'; document.body.appendChild(ring);
+let mx = -100, my = -100, rx = -100, ry = -100;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
+(function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); })();
+document.querySelectorAll('a, button, .stat-block, .pill, .skill-tag, .filter-btn, .tl-expand-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => { dot.classList.add('hovering'); ring.classList.add('hovering'); });
+  el.addEventListener('mouseleave', () => { dot.classList.remove('hovering'); ring.classList.remove('hovering'); });
+});
+document.addEventListener('mousedown', () => { dot.classList.add('clicking'); ring.classList.add('clicking'); });
+document.addEventListener('mouseup', () => { dot.classList.remove('clicking'); ring.classList.remove('clicking'); });
 
 // 6. SKILL FILTER
 document.querySelectorAll('.filter-btn').forEach(btn => {

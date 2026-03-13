@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --bg: #FFFFFF;
     --ink: #111827;
@@ -18,9 +17,14 @@
     --line: rgba(17,24,39,0.1);
     --serif: 'Playfair Display', Georgia, serif;
     --sans: 'IBM Plex Sans', sans-serif;
+    --topbar: 108px;
   }
 
-  html { scroll-behavior: smooth; }
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
   body {
     background: var(--bg);
     color: var(--ink);
@@ -33,127 +37,78 @@
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 24px 60px;
-    background: rgba(255,255,255,0.92);
+    padding: 20px 60px;
+    height: 68px;
+    background: rgba(255,255,255,0.97);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--line);
   }
   .nav-logo { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; text-decoration: none; color: var(--ink); }
   .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
   .nav-links a { font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
-  .nav-links a:hover, .nav-links a.active { color: var(--ink); }
-  .nav-download {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 9px 22px; background: var(--accent); color: #fff;
-    text-decoration: none; transition: background 0.2s;
-  }
-  .nav-download:hover { background: #2563EB; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a.active { color: var(--accent); font-weight: 500; }
 
-  /* ── PAGE HEADER ── */
-  .page-header {
-    padding: 160px 60px 64px;
+  /* ── SUB BAR ── */
+  .resume-bar {
+    position: fixed; top: 68px; left: 0; right: 0; z-index: 99;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 60px;
+    height: 40px;
+    background: #F8F9FB;
     border-bottom: 1px solid var(--line);
-    display: flex; align-items: flex-end; justify-content: space-between; gap: 40px;
-    flex-wrap: wrap;
   }
-  .page-header-left {}
-  .page-eyebrow {
-    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 16px;
-    opacity: 0; transform: translateY(16px); animation: fadeUp 0.7s 0.1s forwards;
-  }
-  .page-title {
-    font-family: var(--serif); font-size: clamp(40px, 6vw, 72px);
-    font-weight: 400; line-height: 1.0; letter-spacing: -0.02em;
-    opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.25s forwards;
-  }
-  .page-title em { font-style: italic; color: var(--accent); }
-  .page-meta {
-    font-size: 0.82rem; color: var(--mid); margin-top: 16px; line-height: 1.6;
-    opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+  .resume-bar-title {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--mid);
   }
   .download-btn {
-    display: inline-flex; align-items: center; gap: 10px;
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 6px 18px; background: var(--accent); color: #fff;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .download-btn:hover { background: #2563EB; }
+
+  /* ── PDF VIEWER ── */
+  .pdf-viewer {
+    position: fixed;
+    top: var(--topbar);
+    left: 0; right: 0; bottom: 0;
+  }
+
+  .pdf-viewer iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* Mobile fallback */
+  .mobile-fallback {
+    display: none;
+    position: fixed;
+    top: var(--topbar);
+    left: 0; right: 0; bottom: 0;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 20px;
+    text-align: center; padding: 40px;
+    background: #F8F9FB;
+  }
+  .mobile-fallback p { color: var(--mid); font-size: 0.95rem; line-height: 1.6; max-width: 320px; }
+  .mobile-fallback a {
+    display: inline-flex; align-items: center; gap: 8px;
     font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 14px 32px; background: var(--ink); color: #fff;
-    text-decoration: none; transition: background 0.2s, transform 0.2s;
-    flex-shrink: 0;
-    opacity: 0; animation: fadeUp 0.7s 0.5s forwards;
+    padding: 14px 32px; background: var(--accent); color: #fff;
+    text-decoration: none;
   }
-  .download-btn:hover { background: var(--accent); transform: translateY(-1px); }
-
-  /* ── RESUME BODY ── */
-  .resume-wrap {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 80px 60px 120px;
-  }
-
-  /* ── RESUME SECTION ── */
-  .r-section { margin-bottom: 64px; }
-  .r-section:last-child { margin-bottom: 0; }
-
-  .r-section-label {
-    font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 28px;
-    display: flex; align-items: center; gap: 14px;
-  }
-  .r-section-label::after { content: ''; flex: 1; height: 1px; background: var(--accent); opacity: 0.25; }
-
-  /* ── CONTACT ROW ── */
-  .r-contact {
-    display: flex; flex-wrap: wrap; gap: 24px;
-    font-size: 0.85rem; color: var(--mid);
-    padding-bottom: 48px;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 56px;
-  }
-  .r-contact a { color: var(--mid); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 1px; transition: color 0.2s, border-color 0.2s; }
-  .r-contact a:hover { color: var(--accent); border-color: var(--accent); }
-  .r-contact-item { display: flex; align-items: center; gap: 6px; }
-  .r-contact-icon { font-size: 0.9rem; }
-
-  /* ── EDUCATION ── */
-  .r-edu-item { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; flex-wrap: wrap; }
-  .r-edu-school { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; }
-  .r-edu-degree { font-size: 0.88rem; color: var(--mid); margin-top: 5px; }
-  .r-edu-year { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); white-space: nowrap; }
-
-  /* ── EXPERIENCE ── */
-  .r-exp-item { margin-bottom: 40px; }
-  .r-exp-item:last-child { margin-bottom: 0; }
-  .r-exp-header { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; flex-wrap: wrap; margin-bottom: 4px; }
-  .r-exp-role { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; }
-  .r-exp-meta { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); white-space: nowrap; }
-  .r-exp-company { font-size: 0.82rem; color: var(--accent); margin-bottom: 12px; font-weight: 400; letter-spacing: 0.04em; }
-  .r-bullets { list-style: none; display: flex; flex-direction: column; gap: 7px; }
-  .r-bullets li { font-size: 0.88rem; color: var(--mid); line-height: 1.65; padding-left: 16px; position: relative; }
-  .r-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-size: 0.78rem; }
-
-  /* ── SKILLS ── */
-  .r-skills-grid { display: grid; grid-template-columns: 120px 1fr; gap: 14px 24px; }
-  .r-skill-cat { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); padding-top: 3px; }
-  .r-skill-vals { font-size: 0.88rem; color: var(--ink); line-height: 1.6; }
-
-  /* ── REVEAL ── */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.visible { opacity: 1; transform: none; }
-
-  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
-  /* ── FOOTER ── */
-  footer { border-top: 1px solid var(--line); padding: 28px 60px; display: flex; justify-content: space-between; align-items: center; }
-  footer span { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--mid); }
 
   @media (max-width: 768px) {
-    nav { padding: 20px 24px; }
+    nav { padding: 16px 24px; }
     .nav-links { display: none; }
-    .page-header { padding: 120px 24px 48px; }
-    .resume-wrap { padding: 48px 24px 80px; }
-    footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
-    .r-skills-grid { grid-template-columns: 1fr; gap: 4px; }
-    .r-skill-cat { color: var(--accent); font-size: 0.68rem; margin-top: 12px; }
+    .resume-bar { padding: 0 24px; }
+    .pdf-viewer { display: none; }
+    .mobile-fallback { display: flex; }
   }
 </style>
 </head>
@@ -170,156 +125,20 @@
   </ul>
 </nav>
 
-<!-- PAGE HEADER -->
-<div class="page-header">
-  <div class="page-header-left">
-    <p class="page-eyebrow">Aditya Kandula</p>
-    <h1 class="page-title">Résumé</h1>
-    <p class="page-meta">Senior Associate Product Manager · Capital One · Arlington, VA</p>
-  </div>
-  <a href="#" class="download-btn" onclick="window.print(); return false;">↓ Download PDF</a>
+<div class="resume-bar">
+  <span class="resume-bar-title">Aditya Kandula — Résumé</span>
+  <a href="resume.pdf" download="Aditya_Kandula_Resume.pdf" class="download-btn">↓ Download</a>
 </div>
 
-<!-- RESUME CONTENT -->
-<div class="resume-wrap">
-
-  <!-- CONTACT -->
-  <div class="r-contact reveal">
-    <span class="r-contact-item"><span class="r-contact-icon">📍</span> 4634 Wilson Blvd, Arlington, VA 22203</span>
-    <span class="r-contact-item"><span class="r-contact-icon">📞</span> <a href="tel:5177752104">517-775-2104</a></span>
-    <span class="r-contact-item"><span class="r-contact-icon">✉</span> <a href="mailto:aditya.kandula@gmail.com">aditya.kandula@gmail.com</a></span>
-    <span class="r-contact-item"><span class="r-contact-icon">🔗</span> <a href="https://linkedin.com/in/adikandula" target="_blank">linkedin.com/in/adikandula</a></span>
-    <span class="r-contact-item"><span class="r-contact-icon">🌐</span> <a href="https://adikandula.github.io" target="_blank">adikandula.github.io</a></span>
-  </div>
-
-  <!-- EDUCATION -->
-  <div class="r-section reveal">
-    <div class="r-section-label">Education</div>
-    <div class="r-edu-item">
-      <div>
-        <div class="r-edu-school">University of Illinois at Urbana-Champaign</div>
-        <div class="r-edu-degree">B.A. in Economics, Minor in Computer Science · College of LAS</div>
-      </div>
-      <div class="r-edu-year">2019 – 2023</div>
-    </div>
-  </div>
-
-  <!-- EXPERIENCE -->
-  <div class="r-section reveal">
-    <div class="r-section-label">Experience</div>
-
-    <div class="r-exp-item">
-      <div class="r-exp-header">
-        <div class="r-exp-role">Senior Associate Product Manager</div>
-        <div class="r-exp-meta">Aug 2024 — Present</div>
-      </div>
-      <div class="r-exp-company">Capital One · McLean, VA</div>
-      <ul class="r-bullets">
-        <li>Leading migration enablement from Discover card accounts and products to Capital One's product ecosystem, ensuring seamless customer transitions and data continuity across platforms.</li>
-        <li>Spearheading launch of enhanced rewards capabilities, allowing customers to purchase premium benefits beyond their base rewards packages. Responsible for alignment across product, engineering, and data teams to ensure new rewards capabilities scale without disrupting existing systems or customer experiences.</li>
-        <li>Drove development of the Loyalty Platform, managing the full rewards data lifecycle. Partnered across engineering, product, and design teams to build seamless API-driven experiences that enabled customers to instantly access, earn, and redeem rewards, driving measurable gains in satisfaction and engagement.</li>
-        <li>Directed cross-functional delivery of a reimagined enrollment experience, enabling instantaneous rewards activation for 30,000+ new daily accounts and improving customer satisfaction metrics.</li>
-        <li>Orchestrated multi-phased rollout that reduced rewards enrollment time from 24 hours to under 2 seconds.</li>
-        <li>Led enterprise-scale performance testing to validate and optimize Rewards infrastructure, ensuring scalability and resilience to support increased traffic following the Discover Financial Services acquisition.</li>
-      </ul>
-    </div>
-
-    <div class="r-exp-item">
-      <div class="r-exp-header">
-        <div class="r-exp-role">Associate Product Manager</div>
-        <div class="r-exp-meta">Aug 2023 — Aug 2024</div>
-      </div>
-      <div class="r-exp-company">Capital One · McLean, VA</div>
-      <ul class="r-bullets">
-        <li>Served as product owner for two technology teams: one responsible for decisioning engine governing API access, another managing eligibility service that powers frontend experiences based on user entitlements.</li>
-        <li>Developed Self-Service Platform enabling API teams to dynamically enforce customer access based on legal and regulatory requirements; partnered closely with users to refine UI/UX through iterative feedback.</li>
-        <li>Collaborated on the design and implementation of an access control feature governing virtual card number issuance for secondary account holders, ensuring business rule integrity and enhanced platform security.</li>
-        <li>Resolved a critical access issue affecting joint bank account holders by designing a targeted remediation that preserved compliance, restoring access pathways when a secondary user's account was in bad standing.</li>
-        <li>Led the successful migration of customers from a legacy entitlements system to a modernized platform, achieving significant latency reduction and measurable performance improvements across services.</li>
-      </ul>
-    </div>
-
-    <div class="r-exp-item">
-      <div class="r-exp-header">
-        <div class="r-exp-role">Product Manager Intern</div>
-        <div class="r-exp-meta">Summer 2022</div>
-      </div>
-      <div class="r-exp-company">EnterpriseDB · Boston, MA</div>
-      <ul class="r-bullets">
-        <li>Conducted user research on EDB Postgres Migration Portal Demo to identify service pain points.</li>
-        <li>Provided recommendations on tools to be implemented for EDB Postgres Advanced Server (EPAS) based on package support and licensing, advised on how to integrate these tools into EPAS.</li>
-        <li>Utilized foreign data wrapper extensions to develop capabilities for accessing remote servers in EPAS.</li>
-      </ul>
-    </div>
-
-    <div class="r-exp-item">
-      <div class="r-exp-header">
-        <div class="r-exp-role">Program Manager Intern</div>
-        <div class="r-exp-meta">Summer 2021</div>
-      </div>
-      <div class="r-exp-company">Microsoft · Seattle, WA</div>
-      <ul class="r-bullets">
-        <li>Led user studies and market research to refine and update Fluid's real-time collaboration copy-and-paste functionality.</li>
-        <li>Authored design specifications and partnered with engineers to deliver an improved prototype.</li>
-      </ul>
-    </div>
-
-    <div class="r-exp-item">
-      <div class="r-exp-header">
-        <div class="r-exp-role">Explore Intern</div>
-        <div class="r-exp-meta">Summer 2020</div>
-      </div>
-      <div class="r-exp-company">Microsoft · Seattle, WA</div>
-      <ul class="r-bullets">
-        <li>Developed collaborative commenting feature for Fluid Framework real-time collaboration platform.</li>
-        <li>Implemented rich text editor to allow for high-level customization and styling of text in comments.</li>
-      </ul>
-    </div>
-
-  </div>
-
-  <!-- SKILLS -->
-  <div class="r-section reveal">
-    <div class="r-section-label">Skills</div>
-    <div class="r-skills-grid">
-      <div class="r-skill-cat">Product</div>
-      <div class="r-skill-vals">Product Roadmapping · Prototyping · A/B Testing · End-to-End Testing · Data Analysis · User Research · API Products</div>
-
-      <div class="r-skill-cat">Languages</div>
-      <div class="r-skill-vals">Java · Python · SQL · C++ · C · JavaScript · HTML/CSS · Kotlin · Matlab · Haskell</div>
-
-      <div class="r-skill-cat">Tools</div>
-      <div class="r-skill-vals">TypeScript · React · Node.js · Android Studio · PostgreSQL · Git · Figma · Snowflake · Splunk · Claude Code</div>
-    </div>
-  </div>
-
-  <!-- INTERESTS -->
-  <div class="r-section reveal">
-    <div class="r-section-label">Interests</div>
-    <p style="font-size:0.88rem; color:var(--mid); line-height:1.7;">
-      Illini Basketball · Chess Theory (Rated 1600) · Tennis (especially Roger Federer) · Detroit-Style Pizza
-    </p>
-  </div>
-
+<div class="pdf-viewer">
+  <iframe src="resume.pdf#toolbar=1&navpanes=0&scrollbar=1&view=FitH" title="Aditya Kandula Resume"></iframe>
 </div>
 
-<footer>
-  <span>© 2025 Aditya Kandula</span>
-  <span><a href="index.html" style="color:var(--mid); text-decoration:none; border-bottom: 1px solid var(--line); padding-bottom:1px;">← Back to site</a></span>
-</footer>
+<!-- Mobile: PDF embed doesn't work well on phones -->
+<div class="mobile-fallback">
+  <p>PDF preview isn't available on mobile. Download the resume to view it.</p>
+  <a href="resume.pdf" download="Aditya_Kandula_Resume.pdf">↓ Download Resume</a>
+</div>
 
-<script>
-  const revealObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
-        const idx = siblings.indexOf(entry.target);
-        setTimeout(() => entry.target.classList.add('visible'), idx * 100);
-        revealObs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-</script>
 </body>
 </html>
